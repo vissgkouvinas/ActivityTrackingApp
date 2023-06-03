@@ -31,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
         uploadFileBTN.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                if(checkPermissions()){
+            public void onClick(View v) {
+                if (checkPermissions()) {
                     //permission allowed
                     openFile(myUri);
-                }else{
+                } else {
                     //permission not allowed
                     requestPermissions();
                 }
@@ -54,33 +54,35 @@ public class MainActivity extends AppCompatActivity {
         // system file picker when it loads.
         intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
 
-        startActivityForResult(intent,2);
+        startActivityForResult(intent, 2);
     }
 
     String pathOfChosenFile;
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
 
-        if(requestCode == 2) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 2) {
             Uri currFileURI = data.getData();
             pathOfChosenFile = currFileURI.getPath();
-            Toast.makeText(MainActivity.this,pathOfChosenFile,Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, pathOfChosenFile, Toast.LENGTH_SHORT).show();
+
         }
     }
 
-    private boolean checkPermissions(){
-        int result = ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE);
-        if(result == PackageManager.PERMISSION_GRANTED){
+    private boolean checkPermissions() {
+        int result = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (result == PackageManager.PERMISSION_GRANTED) {
             return true;
-        }else
+        } else
             return false;
     }
 
     private void requestPermissions() {
-        if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE)){
-            Toast.makeText(MainActivity.this,"Απαιτείται άδεια πρόσβασης στα αρχεία της συσκευής!",Toast.LENGTH_SHORT).show();
-        }else
-        ActivityCompat.requestPermissions(MainActivity.this,new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},111);
+        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            Toast.makeText(MainActivity.this, "Απαιτείται άδεια πρόσβασης στα αρχεία της συσκευής!", Toast.LENGTH_SHORT).show();
+        } else
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 111);
     }
 
 }

@@ -26,6 +26,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     namespace 'com.example.activitytrackingapp'
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src\\main\\res', 'src\\main\\res\\2'
+            }
+        }
+    }
 }
 
 dependencies {
