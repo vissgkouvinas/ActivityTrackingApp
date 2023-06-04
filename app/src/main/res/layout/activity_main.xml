@@ -52,4 +52,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.256" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="411dp"
+        android:layout_height="70dp"
+        android:background="#4952A3"
+        app:itemIconTint="@color/design_default_color_background"
+        app:itemRippleColor="#FFFFFF"
+        app:itemTextColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        tools:layout_editor_absoluteX="0dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
