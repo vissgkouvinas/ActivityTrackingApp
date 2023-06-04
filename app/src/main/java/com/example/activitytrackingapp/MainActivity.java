@@ -17,6 +17,7 @@ import android.provider.DocumentsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+//import Client;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -66,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
             Uri currFileURI = data.getData();
             pathOfChosenFile = currFileURI.getPath();
             Toast.makeText(MainActivity.this, pathOfChosenFile, Toast.LENGTH_SHORT).show();
-
+            Client client = new Client(pathOfChosenFile);
+            client.start();
         }
     }
 

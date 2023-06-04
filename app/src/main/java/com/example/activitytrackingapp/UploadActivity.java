@@ -1,8 +1,6 @@
 package com.example.activitytrackingapp;
 
+import android.os.Bundle;
+
 public class UploadActivity {
-
-    //@Override
-    //protected void onCreate(Bu)
-
 }
