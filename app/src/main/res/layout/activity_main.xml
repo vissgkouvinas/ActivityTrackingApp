@@ -7,6 +7,7 @@
     android:background="#262D5A"
     tools:context=".MainActivity">
 
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="329dp"
@@ -52,7 +53,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.256" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
+        android:gravity="center_horizontal"
+        android:translationZ="10dp"
+        />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
         android:layout_width="411dp"
         android:layout_height="70dp"
         android:background="#4952A3"
@@ -60,7 +71,12 @@
         app:itemRippleColor="#FFFFFF"
         app:itemTextColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu"
-        tools:layout_editor_absoluteX="0dp" />
+        android:translationZ="10dp"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

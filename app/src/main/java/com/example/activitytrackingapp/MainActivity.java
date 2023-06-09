@@ -3,25 +3,42 @@ package com.example.activitytrackingapp;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.GnssAntennaInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 //import Client;
 
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+import Codebase.Result;
+
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
+
+    BottomNavigationView bottomNavigationView;
+
+    public ArrayList<Result> resultsList = new ArrayList<Result>();
+    Bundle resultsData;
+    //ResultsFragment resultsFragment = new ResultsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button uploadFileBTN = findViewById(R.id.uploadFileBTN);
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+
+        bottomNavigationView.setOnItemSelectedListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+
 
         uploadFileBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +64,37 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                /*getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flFragment, firstFragment)
+                        .commit();*/
+                return true;
+
+            case R.id.results:
+                /*getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, resultsFragment)
+                        .commit();*/
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.fragment_container_view, ResultsFragment.class,resultsData)
+                        .commit();
+                return true;
+/*
+            case R.id.settings:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flFragment, thirdFragment)
+                        .commit();
+                return true;*/
+        }
+        return false;
     }
 
     Uri myUri = Uri.parse("/STORAGE/SDCARD");
@@ -67,8 +120,20 @@ public class MainActivity extends AppCompatActivity {
             Uri currFileURI = data.getData();
             pathOfChosenFile = currFileURI.getPath();
             Toast.makeText(MainActivity.this, pathOfChosenFile, Toast.LENGTH_SHORT).show();
-            Client client = new Client(pathOfChosenFile);
-            client.start();
+            (new Thread() {
+                public void run() {
+                    Client client = new Client(pathOfChosenFile);
+                    client.start();
+                    try {
+                        client.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    resultsList.add(client.getResult());
+                    Log.v("ACTIVITY","THIS IS INSIDE THE ACTIVITY\n"+ resultsList.get(0) );
+                }
+            }).start();
+
         }
     }
 
@@ -86,5 +151,7 @@ public class MainActivity extends AppCompatActivity {
         } else
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 111);
     }
+
+
 
 }

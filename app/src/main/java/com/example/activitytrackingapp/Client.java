@@ -12,6 +12,7 @@ public class Client extends Thread {
     String path;
     File fileToUpload;
     Socket socket;
+    Result result;
     private static final String TAG = "Client";
 
     /* OLD WAY THAT CRASHES NORMALLY AT LEAST
@@ -21,6 +22,10 @@ public class Client extends Thread {
 
     Client(String path) {
         this.fileToUpload =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"route1.gpx");
+    }
+
+    public Result getResult(){
+        return result;
     }
 
 
@@ -56,14 +61,17 @@ public class Client extends Thread {
             try {
 
                 /* Read result back from stream */
-                Result result = (Result) in.readObject();
+                result = (Result) in.readObject();
 
+                Thread.sleep(10000);
                 /*Print Result*/
                 Log.v(TAG,result.toString());
 
             }catch(IOException ioException){
                 ioException.printStackTrace();
             } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
