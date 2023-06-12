@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     BottomNavigationView bottomNavigationView;
 
     public ArrayList<Result> resultsList = new ArrayList<Result>();
-    Bundle resultsData;
+    Bundle resultsData = new Bundle();
     //ResultsFragment resultsFragment = new ResultsFragment();
 
     @Override
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         .beginTransaction()
                         .replace(R.id.fragment_container_view, resultsFragment)
                         .commit();*/
+                resultsData.putSerializable("results",resultsList);
                 getSupportFragmentManager()
                         .beginTransaction()
                         .add(R.id.fragment_container_view, ResultsFragment.class,resultsData)
@@ -130,7 +131,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         throw new RuntimeException(e);
                     }
                     resultsList.add(client.getResult());
-                    Log.v("ACTIVITY","THIS IS INSIDE THE ACTIVITY\n"+ resultsList.get(0) );
+                    Log.v("ACTIVITY","THIS IS INSIDE THE ACTIVITY\n");
+                    for (Codebase.Result result : resultsList) {
+                        if(!result.equals(null)) {
+                            Log.v("ACTIVITY", result.toString());
+                        }
+                    }
+
                 }
             }).start();
 

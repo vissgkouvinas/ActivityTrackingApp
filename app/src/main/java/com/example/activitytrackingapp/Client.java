@@ -9,7 +9,7 @@ import java.io.*;
 import java.net.*;
 
 public class Client extends Thread {
-    String path;
+    String fileName;
     File fileToUpload;
     Socket socket;
     Result result;
@@ -21,7 +21,10 @@ public class Client extends Thread {
     }*/
 
     Client(String path) {
-        this.fileToUpload =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"route1.gpx");
+        int index = path.lastIndexOf("/");
+        this.fileName = path.substring(index + 1);
+
+        this.fileToUpload =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),fileName);
     }
 
     public Result getResult(){
@@ -63,7 +66,7 @@ public class Client extends Thread {
                 /* Read result back from stream */
                 result = (Result) in.readObject();
 
-                Thread.sleep(10000);
+                //Thread.sleep(10000);
                 /*Print Result*/
                 Log.v(TAG,result.toString());
 
@@ -71,9 +74,9 @@ public class Client extends Thread {
                 ioException.printStackTrace();
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
-            } catch (InterruptedException e) {
+            } /*catch (InterruptedException e) {
                 throw new RuntimeException(e);
-            }
+            }*/
 
             /*Closing Output and Input Streams, also the Socket to the server*/
             in.close();

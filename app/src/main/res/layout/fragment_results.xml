@@ -1,23 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#262D5A"
-    tools:context=".ResultsFragment">
+    tools:context=".ResultsFragment"
+    android:orientation="vertical"
+    android:clickable="true">
 
-    <TextView
-        android:id="@+id/pageTitle"
+    <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="86dp"
-        android:gravity="center"
-        android:text="Results"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="#E8E8E8"
-        app:fontWeight="500"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"/>
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/pageTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Results"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="#E8E8E8"
+            app:fontWeight="500"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp"/>
+        <Button
+            android:id="@+id/backBTN"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:textColor="#262D5A"
+            android:text="Πίσω"
+            app:backgroundTint="#FFC266"
+            app:iconTint="#262D5A"/>
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/pageTitle"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/resultsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <!---
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="15dp"
+                android:background="#343D7C"
+                android:textColor="#E8E8E8"
+                android:gravity="center"
+                android:text="Hey !" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="120dp"
+                android:layout_margin="15dp"
+                android:textColor="#E8E8E8"
+                android:text="Hey !" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="120dp"
+                android:layout_margin="15dp"
+                android:background="#343D7C"
+                android:textColor="#E8E8E8"
+                android:text="Hey !" />
+-->
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
