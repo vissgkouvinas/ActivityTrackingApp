@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -70,10 +71,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         switch (item.getItemId()) {
             case R.id.home:
-                /*getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flFragment, firstFragment)
-                        .commit();*/
+                for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+
+
+                    if (fragment != null) {
+
+                        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                    }
+                }
                 return true;
 
             case R.id.results:
@@ -81,11 +86,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         .beginTransaction()
                         .replace(R.id.fragment_container_view, resultsFragment)
                         .commit();*/
-                resultsData.putSerializable("results",resultsList);
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.fragment_container_view, ResultsFragment.class,resultsData)
-                        .commit();
+                if(getSupportFragmentManager().getFragments().size()==0){
+                    Log.v("Activity", String.valueOf(getSupportFragmentManager().getFragments().size()));
+
+                    resultsData.putSerializable("results", resultsList);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.fragment_container_view, ResultsFragment.class, resultsData)
+                            .commit();
+                }else {
+                    Fragment fragment = getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1);
+                    String fragmentType = String.valueOf(fragment);
+                    int indexOfBracket = fragmentType.indexOf("{");
+                    if (!(fragmentType.substring(0, indexOfBracket).equals("ResultsWidgetFragment") || (fragmentType.substring(0, indexOfBracket).equals("ResultsFragment")))) {
+                        Log.v("Activity", fragmentType.substring(0, indexOfBracket));
+                        resultsData.putSerializable("results", resultsList);
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .add(R.id.fragment_container_view, ResultsFragment.class, resultsData)
+                                .commit();
+                    }
+                }
                 return true;
 /*
             case R.id.settings:
@@ -146,10 +167,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private boolean checkPermissions() {
         int result = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else
-            return false;
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermissions() {

@@ -10,11 +10,12 @@
     android:orientation="vertical"
     android:clickable="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
         android:layout_height="86dp"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/pageTitle"
             android:layout_width="match_parent"
@@ -25,26 +26,34 @@
             android:textColor="#E8E8E8"
             app:fontWeight="500"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp"/>
+            tools:layout_editor_absoluteX="0dp" />
+
         <Button
             android:id="@+id/backBTN"
-            android:layout_width="40dp"
-            android:layout_height="20dp"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            style="?android:attr/borderlessButtonStyle"
             android:textColor="#262D5A"
-            android:text="Πίσω"
-            app:backgroundTint="#FFC266"
-            app:iconTint="#262D5A"/>
-    </LinearLayout>
+            app:backgroundTint="#00FFC266"
+            app:cornerRadius="@null"
+            app:icon="?attr/homeAsUpIndicator"
+            app:iconTint="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <ScrollView
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/pageTitle"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:id="@+id/resultsContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"

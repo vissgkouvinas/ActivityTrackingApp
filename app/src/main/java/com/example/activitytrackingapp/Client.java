@@ -37,7 +37,7 @@ public class Client extends Thread {
         try {
 
             /* Create socket for contacting the server on port 8000*/
-            socket = new Socket("192.168.2.5",8000);
+            socket = new Socket("192.168.68.105",8000);
             Log.v(TAG,"Connection has been approved!");
 
             /* Create the stream to send data to the server */

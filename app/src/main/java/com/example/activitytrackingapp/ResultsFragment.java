@@ -2,6 +2,9 @@ package com.example.activitytrackingapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,10 +26,32 @@ public class ResultsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         View view = inflater.inflate(R.layout.fragment_results, container, false);
         Button backBTN = view.findViewById(R.id.backBTN);
+
+        backBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (Fragment fragment : getParentFragmentManager().getFragments()) {
+                    if (fragment != null) {
+                        getParentFragmentManager().beginTransaction().remove(fragment).commit();
+                    }
+                }
+            }
+        });
+
+
+
+        // Inflate the layout for this fragment
+        return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
         resultsList = (ArrayList<Codebase.Result>) getArguments().getSerializable("results");
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -45,13 +70,5 @@ public class ResultsFragment extends Fragment {
             }
             fragmentTransaction.commit();
         }
-
-        // Inflate the layout for this fragment
-        return view;
     }
-
-
-
-
-
 }
