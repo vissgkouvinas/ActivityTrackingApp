@@ -21,12 +21,12 @@ public class ResultsFragment extends Fragment {
 
     ArrayList<Codebase.Result> resultsList = new ArrayList<Codebase.Result>();
 
-    public ResultsFragment(){
+    public ResultsFragment() {
         // required a empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_results, container, false);
         Button backBTN = view.findViewById(R.id.backBTN);
@@ -42,22 +42,12 @@ public class ResultsFragment extends Fragment {
             }
         });
 
-
-
-        // Inflate the layout for this fragment
-        return view;
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
         resultsList = (ArrayList<Codebase.Result>) getArguments().getSerializable("results");
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
-        if(!resultsList.isEmpty()) {
-            Log.v("FRAGMENT","I GET DATA INSIDE THE FRAGMENT\n");
+        if (!resultsList.isEmpty()) {
+
             for (Codebase.Result result : resultsList) {
                 Log.v("FRAGMENT", Float.toString(result.getTime()));
             }
@@ -69,6 +59,10 @@ public class ResultsFragment extends Fragment {
 
             }
             fragmentTransaction.commit();
+
         }
+        // Inflate the layout for this fragment
+        return view;
     }
 }
+

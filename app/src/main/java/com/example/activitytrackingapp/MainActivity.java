@@ -37,8 +37,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     BottomNavigationView bottomNavigationView;
 
+    String username;
+    float[] statistics = {0.0f,0.0f,0.0f,0.0f};
+
+    float[] generalStatistics= {0.0f,0.0f,0.0f,0.0f};
+
     public ArrayList<Result> resultsList = new ArrayList<Result>();
     Bundle resultsData = new Bundle();
+    Bundle statsData = new Bundle();
     //ResultsFragment resultsFragment = new ResultsFragment();
 
     @Override
@@ -72,20 +78,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.home:
                 for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-
-
                     if (fragment != null) {
-
                         getSupportFragmentManager().beginTransaction().remove(fragment).commit();
                     }
                 }
                 return true;
 
             case R.id.results:
-                /*getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container_view, resultsFragment)
-                        .commit();*/
+                for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+                    if (fragment != null) {
+                        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                    }
+                }
                 if(getSupportFragmentManager().getFragments().size()==0){
                     Log.v("Activity", String.valueOf(getSupportFragmentManager().getFragments().size()));
 
@@ -108,13 +112,36 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     }
                 }
                 return true;
-/*
-            case R.id.settings:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flFragment, thirdFragment)
-                        .commit();
-                return true;*/
+
+            case R.id.statistics:
+                for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+                    if (fragment != null) {
+                        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                    }
+                }
+                if(getSupportFragmentManager().getFragments().size()==0){
+
+                    statsData.putSerializable("statistics", statistics);
+                    statsData.putSerializable("generalStatistics", generalStatistics);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.fragment_container_view, StatsFragment.class, statsData)
+                            .commit();
+                }else {
+                    Fragment fragment = getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1);
+                    String fragmentType = String.valueOf(fragment);
+                    int indexOfBracket = fragmentType.indexOf("{");
+                    if (!(fragmentType.substring(0, indexOfBracket).equals("StatsFragment") )) {
+                        Log.v("Activity", fragmentType.substring(0, indexOfBracket));
+                        statsData.putSerializable("statistics", statistics);
+                        statsData.putSerializable("generalStatistics", generalStatistics);
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .add(R.id.fragment_container_view, StatsFragment.class, statsData)
+                                .commit();
+                    }
+                }
+                return true;
         }
         return false;
     }
@@ -152,13 +179,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         throw new RuntimeException(e);
                     }
                     resultsList.add(client.getResult());
-                    Log.v("ACTIVITY","THIS IS INSIDE THE ACTIVITY\n");
+                    username = client.getUsername();
+                    statistics = client.getStatistics();
+                    generalStatistics = client.getGeneralStatistics();
+                    Log.v("ACTIVITY","THIS IS INSIDE THE ACTIVITY\n----------"+username+"----------\n");
+                    /*
                     for (Codebase.Result result : resultsList) {
-                        if(!result.equals(null)) {
+                        if(result != null) {
                             Log.v("ACTIVITY", result.toString());
                         }
+                    }*/
+                    if(statistics != null) {
+                        for (float stat : statistics) {
+                            Log.v("ACTIVITY", String.valueOf(stat));
+                        }
                     }
-
                 }
             }).start();
 

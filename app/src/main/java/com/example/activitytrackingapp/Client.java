@@ -13,31 +13,31 @@ public class Client extends Thread {
     File fileToUpload;
     Socket socket;
     Result result;
+    String username;
+
+    float[] statistics = new float[4];
+    float[] generalStatistics = new float[4];
     private static final String TAG = "Client";
 
-    /* OLD WAY THAT CRASHES NORMALLY AT LEAST
-    Client(String path) {
-        this.path = "content://" + path;
-    }*/
 
     Client(String path) {
         int index = path.lastIndexOf("/");
         this.fileName = path.substring(index + 1);
-
         this.fileToUpload =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),fileName);
     }
 
     public Result getResult(){
         return result;
     }
-
+    public String getUsername(){return username;}
+    public float[] getStatistics(){return statistics;}
+    public float[] getGeneralStatistics(){return generalStatistics;}
 
     public void run() {
 
         try {
-
             /* Create socket for contacting the server on port 8000*/
-            socket = new Socket("192.168.68.105",8000);
+            socket = new Socket("192.168.2.5",8000);
             Log.v(TAG,"Connection has been approved!");
 
             /* Create the stream to send data to the server */
@@ -65,6 +65,9 @@ public class Client extends Thread {
 
                 /* Read result back from stream */
                 result = (Result) in.readObject();
+                username = (String) in.readObject();
+                statistics = (float[]) in.readObject();
+                generalStatistics = (float[]) in.readObject();
 
                 //Thread.sleep(10000);
                 /*Print Result*/
