@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Results"
+            android:text="Statistics"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="#E8E8E8"
             app:fontWeight="500"

@@ -30,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Codebase.Result;
 
@@ -75,22 +76,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        List<Fragment> aliveFragments;
         switch (item.getItemId()) {
             case R.id.home:
-                for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-                    if (fragment != null) {
-                        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                aliveFragments = getSupportFragmentManager().getFragments();
+                if(!(aliveFragments.size()==0)) {
+                    for (Fragment fragment : aliveFragments) {
+                        if (fragment != null) {
+                            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                        }
                     }
                 }
                 return true;
 
             case R.id.results:
-                for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-                    if (fragment != null) {
-                        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                    }
-                }
-                if(getSupportFragmentManager().getFragments().size()==0){
+                aliveFragments = getSupportFragmentManager().getFragments();
+                if(aliveFragments.size()==0){
                     Log.v("Activity", String.valueOf(getSupportFragmentManager().getFragments().size()));
 
                     resultsData.putSerializable("results", resultsList);
@@ -99,10 +100,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                             .add(R.id.fragment_container_view, ResultsFragment.class, resultsData)
                             .commit();
                 }else {
-                    Fragment fragment = getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1);
+                    Fragment fragment = aliveFragments.get(getSupportFragmentManager().getFragments().size() - 1);
                     String fragmentType = String.valueOf(fragment);
                     int indexOfBracket = fragmentType.indexOf("{");
-                    if (!(fragmentType.substring(0, indexOfBracket).equals("ResultsWidgetFragment") || (fragmentType.substring(0, indexOfBracket).equals("ResultsFragment")))) {
+                    if (!(   (fragmentType.substring(0, indexOfBracket).equals("ResultsWidgetFragment"))   ||   (fragmentType.substring(0, indexOfBracket).equals("ResultsFragment"))  )) {
+
+                        for (Fragment fragmentToDestroy : aliveFragments ) {
+                            if (fragment != null) {
+                                getSupportFragmentManager().beginTransaction().remove(fragmentToDestroy).commit();
+                            }
+                        }
+
                         Log.v("Activity", fragmentType.substring(0, indexOfBracket));
                         resultsData.putSerializable("results", resultsList);
                         getSupportFragmentManager()
@@ -114,12 +122,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
 
             case R.id.statistics:
-                for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-                    if (fragment != null) {
-                        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                    }
-                }
-                if(getSupportFragmentManager().getFragments().size()==0){
+
+                aliveFragments = getSupportFragmentManager().getFragments();
+                if(aliveFragments.size()==0){
 
                     statsData.putSerializable("statistics", statistics);
                     statsData.putSerializable("generalStatistics", generalStatistics);
@@ -128,10 +133,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                             .add(R.id.fragment_container_view, StatsFragment.class, statsData)
                             .commit();
                 }else {
-                    Fragment fragment = getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1);
+                    Fragment fragment = aliveFragments.get(getSupportFragmentManager().getFragments().size() - 1);
                     String fragmentType = String.valueOf(fragment);
                     int indexOfBracket = fragmentType.indexOf("{");
-                    if (!(fragmentType.substring(0, indexOfBracket).equals("StatsFragment") )) {
+                    if (!(   (fragmentType.substring(0, indexOfBracket).equals("StatsWidgetFragment"))   ||   (fragmentType.substring(0, indexOfBracket).equals("StatsFragment"))  )) {
+
+                        for (Fragment fragmentToDestroy : aliveFragments ) {
+                            if (fragment != null) {
+                                getSupportFragmentManager().beginTransaction().remove(fragmentToDestroy).commit();
+                            }
+                        }
+
                         Log.v("Activity", fragmentType.substring(0, indexOfBracket));
                         statsData.putSerializable("statistics", statistics);
                         statsData.putSerializable("generalStatistics", generalStatistics);
@@ -190,7 +202,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         }
                     }*/
                     if(statistics != null) {
+                        Log.v("ACTIVITY", "My Statistics");
                         for (float stat : statistics) {
+                            Log.v("ACTIVITY", String.valueOf(stat));
+                        }
+                    }
+                    if(generalStatistics != null) {
+                        Log.v("ACTIVITY", "ALL Statistics");
+                        for (float stat : generalStatistics) {
                             Log.v("ACTIVITY", String.valueOf(stat));
                         }
                     }
