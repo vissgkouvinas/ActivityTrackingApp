@@ -42,6 +42,8 @@ public class StatsFragment extends Fragment {
             Bundle widgetData = new Bundle();
             widgetData.putSerializable("myData", myStatistics[i]);
             widgetData.putSerializable("generalData", generalStatistics[i]);
+            Log.v("StatsFragment", String.valueOf(i));
+            widgetData.putInt("mode",i);
             StatsWidgetFragment newFragment = new StatsWidgetFragment();
             fragmentTransaction.add(R.id.statsContainer, StatsWidgetFragment.class, widgetData);
         }

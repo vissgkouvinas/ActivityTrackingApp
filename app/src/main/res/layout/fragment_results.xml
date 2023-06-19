@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#262D5A"
+    app:layout_constraintBottom_toTopOf="@+id/bottom_nav_menu"
+    android:background="#343D7C"
     tools:context=".ResultsFragment"
     android:orientation="vertical"
     android:clickable="true">
@@ -48,6 +49,7 @@
     <ScrollView
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/pageTitle"
+
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -56,7 +58,7 @@
             android:layout_height="120dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 

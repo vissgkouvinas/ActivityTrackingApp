@@ -57,10 +57,10 @@
         android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
+        android:layout_marginBottom="70dp"
         android:gravity="center_horizontal"
         android:translationZ="10dp"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"

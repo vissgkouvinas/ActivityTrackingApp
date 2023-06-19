@@ -5,17 +5,21 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -41,11 +45,33 @@ public class StatsWidgetFragment extends Fragment {
         TextView secondText = view.findViewById(R.id.secondText);
 
         float myStat = (float)  (getArguments().getSerializable("myData"));
-        firstText.setText( (String.format("%.2f",myStat)) );
-
         float allStat = (float)  (getArguments().getSerializable("generalData"));
-        secondText.setText( (String.format("%.2f",allStat)) );
 
+        Log.v("StatsFragment", String.valueOf(getArguments().getInt("mode")));
+        switch(getArguments().getInt("mode")) {
+
+            case 0:
+                int mins = ((int)myStat) / 60;
+                int secs = ((int)myStat) % 60;
+                firstText.setText( (String.format("%d'%d\"",mins,secs)) );
+
+                mins = ((int)allStat) / 60;
+                secs = ((int)allStat) % 60;
+                secondText.setText( (String.format("%d'%d\"",mins,secs)) );
+                break;
+            case 1:
+                myStat /= 1000;
+                firstText.setText( (String.format("%.1fkm",myStat)) );
+
+                allStat /= 1000;
+                secondText.setText( (String.format("%.1fkm",allStat)) );
+                break;
+            case 2:
+                firstText.setText( (String.format("%.0fm",myStat)) );
+
+                secondText.setText( (String.format("%.0fm",allStat)) );
+                break;
+        }
 
         // initializing variable for bar chart.
         barChart = view.findViewById(R.id.idBarChart);
@@ -53,6 +79,7 @@ public class StatsWidgetFragment extends Fragment {
         ArrayList<BarEntry> barEntriesArrayList = new ArrayList<>();
         barEntriesArrayList.add(new BarEntry(1f, myStat));
         barEntriesArrayList.add(new BarEntry(2f, allStat));
+
 
         // creating a new bar data set.
         barDataSet = new BarDataSet(barEntriesArrayList, "");
@@ -66,7 +93,9 @@ public class StatsWidgetFragment extends Fragment {
         barChart.setData(barData);
 
         // adding color to our bar data set.
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        //barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        int[] graphColors = new int[]{Color.rgb(255, 194, 102), Color.rgb(166, 120, 51)};
+        barDataSet.setColors(graphColors);
 
         // setting text color.
         barDataSet.setValueTextColor(Color.argb(0.0f,0.0f,0.0f,0.0f));
@@ -88,6 +117,7 @@ public class StatsWidgetFragment extends Fragment {
         XAxis xaxis = barChart.getXAxis();
         xaxis.setEnabled(false);
 
+
         yaxis.setDrawGridLines(false);
         xaxis.setDrawGridLines(false);
 
@@ -95,3 +125,4 @@ public class StatsWidgetFragment extends Fragment {
         return view;
     }
 }
+
