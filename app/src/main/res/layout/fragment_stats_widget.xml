@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="171dp"
     android:layout_margin="7dp"
-    android:background="#343D7C"
+    android:background="@drawable/layout_bg"
     android:gravity="center_horizontal"
     tools:context=".StatsWidgetFragment">
 

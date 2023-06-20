@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_constraintBottom_toTopOf="@+id/bottom_nav_menu"
-    android:background="#343D7C"
+    android:background="#262D5A"
     tools:context=".ResultsFragment"
     android:orientation="vertical"
     android:clickable="true">

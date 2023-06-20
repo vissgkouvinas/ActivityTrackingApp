@@ -17,10 +17,24 @@ public class ResultsWidgetFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_results_widget, container, false);
-        TextView widgetTitle = view.findViewById(R.id.widgetTitle);
+        TextView timeText = view.findViewById(R.id.timeText);
+        TextView distanceText = view.findViewById(R.id.distanceText);
+        TextView elevationText = view.findViewById(R.id.elevationText);
 
-        Codebase.Result temp = (Codebase.Result)  (getArguments().getSerializable("result"));
-        widgetTitle.setText( Float.toString( temp.getTime() ) );
+        Codebase.Result result = (Codebase.Result)  (getArguments().getSerializable("result"));
+        float time = result.getTime();
+        float distance = result.getDistance();
+        float elevation = result.getElevation();
+
+        int mins = ((int)time) / 60;
+        int secs = ((int)time) % 60;
+        timeText.setText( (String.format("%d'%d\"",mins,secs)) );
+
+        distance /= 1000;
+        distanceText.setText( (String.format("%.1fkm",distance)) );
+
+        elevationText.setText( (String.format("%.0fm",elevation)) );
+
 
         // Inflate the layout for this fragment
         return view;

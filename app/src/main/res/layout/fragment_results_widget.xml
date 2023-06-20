@@ -1,22 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="180dp"
+    android:layout_margin="7dp"
+    android:background="@drawable/layout_bg"
+    android:gravity="center_horizontal"
+
+    android:orientation="vertical"
     tools:context=".ResultsWidgetFragment">
 
 
-    <TextView
-        android:id="@+id/widgetTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="#E8E8E8"
-        android:background="#343D7C"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:paddingLeft="30dp"
+        >
+
+        <TextView
+            android:id="@+id/phraseDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Your Night Run"
+            android:textColor="#A2A2B6"
+            android:layout_below="@+id/dateText"
+
+            />
+
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/00/0000"
+            android:textColor="#E8E8E8"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/distanceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="#343D7C"
+            android:text="Dist."
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="#E8E8E8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/timeText"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/timeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="#343D7C"
+            android:text="Time"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="#E8E8E8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/elevationText"
+            app:layout_constraintStart_toEndOf="@+id/distanceText" />
+
+        <TextView
+            android:id="@+id/elevationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="#343D7C"
+            android:text="Elev."
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="#E8E8E8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/timeText" />
+
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distance"
+            android:textColor="#FFC266"
+            android:layout_marginTop="-45dp"
+            app:layout_constraintBottom_toBottomOf="@+id/distanceText"
+            app:layout_constraintEnd_toEndOf="@+id/distanceText"
+            app:layout_constraintStart_toStartOf="@+id/distanceText"
+            app:layout_constraintTop_toTopOf="@+id/distanceText" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time"
+            android:textColor="#FFC266"
+            android:layout_marginTop="-45dp"
+            app:layout_constraintBottom_toBottomOf="@+id/timeText"
+            app:layout_constraintEnd_toEndOf="@+id/timeText"
+            app:layout_constraintStart_toStartOf="@+id/timeText"
+            app:layout_constraintTop_toTopOf="@+id/timeText" />
+
+        <TextView
+            android:id="@+id/elevation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Elevation"
+            android:textColor="#FFC266"
+            android:layout_marginTop="-45dp"
+            app:layout_constraintBottom_toBottomOf="@+id/elevationText"
+            app:layout_constraintEnd_toEndOf="@+id/elevationText"
+            app:layout_constraintStart_toStartOf="@+id/elevationText"
+            app:layout_constraintTop_toTopOf="@+id/elevationText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</LinearLayout>
