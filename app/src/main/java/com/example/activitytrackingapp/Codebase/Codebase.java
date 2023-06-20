@@ -1,4 +1,5 @@
-package Codebase;
+package com.example.activitytrackingapp.Codebase;
+import Codebase.Result;
 public class Codebase {
     /**
      * Calculate distance between two points in latitude and longitude taking
