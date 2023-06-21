@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     BottomNavigationView bottomNavigationView;
 
     String username;
+
     float[] statistics = {0.0f,0.0f,0.0f,0.0f};
 
     float[] generalStatistics= {0.0f,0.0f,0.0f,0.0f};
@@ -190,8 +191,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    resultsList.add(client.getResult());
-                    username = client.getUsername();
+                    Result result = client.getResult();
+                    resultsList.add(result);
+                    username = result.getName();
+
+
                     statistics = client.getStatistics();
                     generalStatistics = client.getGeneralStatistics();
                     Log.v("ACTIVITY","THIS IS INSIDE THE ACTIVITY\n----------"+username+"----------\n");

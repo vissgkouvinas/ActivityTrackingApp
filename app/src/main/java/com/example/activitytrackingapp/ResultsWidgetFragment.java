@@ -20,11 +20,15 @@ public class ResultsWidgetFragment extends Fragment {
         TextView timeText = view.findViewById(R.id.timeText);
         TextView distanceText = view.findViewById(R.id.distanceText);
         TextView elevationText = view.findViewById(R.id.elevationText);
+        TextView dateText = view.findViewById((R.id.dateText));
+        TextView phraseDateText = view.findViewById((R.id.phraseDateText));
 
         Codebase.Result result = (Codebase.Result)  (getArguments().getSerializable("result"));
         float time = result.getTime();
         float distance = result.getDistance();
         float elevation = result.getElevation();
+        dateText.setText(result.getDate());
+        phraseDateText.setText("Your "+result.getTimeframe()+" Run");
 
         int mins = ((int)time) / 60;
         int secs = ((int)time) % 60;

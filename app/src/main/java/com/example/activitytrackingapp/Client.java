@@ -65,7 +65,6 @@ public class Client extends Thread {
 
                 /* Read result back from stream */
                 result = (Result) in.readObject();
-                username = (String) in.readObject();
                 statistics = (float[]) in.readObject();
                 generalStatistics = (float[]) in.readObject();
 
