@@ -16,6 +16,8 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+import Codebase.Result;
+
 
 public class ResultsFragment extends Fragment {
 
@@ -48,10 +50,10 @@ public class ResultsFragment extends Fragment {
 
         if (!resultsList.isEmpty()) {
 
-            for (Codebase.Result result : resultsList) {
-                Log.v("FRAGMENT", Float.toString(result.getTime()));
-            }
-            for (Codebase.Result result : resultsList) {
+            Codebase.Result result;
+            int size = resultsList.size();
+            for ( int i =size-1;i>=0;i--) {
+                result = resultsList.get(i);
                 Bundle specificResult = new Bundle();
                 specificResult.putSerializable("result", result);
                 ResultsWidgetFragment newFragment = new ResultsWidgetFragment();

@@ -22,6 +22,8 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 
@@ -43,6 +45,7 @@ public class StatsWidgetFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_stats_widget, container, false);
         TextView firstText = view.findViewById(R.id.firstText);
         TextView secondText = view.findViewById(R.id.secondText);
+        TextView percentageLabel = view.findViewById(R.id.percentageLabel);
 
         float myStat = (float)  (getArguments().getSerializable("myData"));
         float allStat = (float)  (getArguments().getSerializable("generalData"));
@@ -58,6 +61,15 @@ public class StatsWidgetFragment extends Fragment {
                 mins = ((int)allStat) / 60;
                 secs = ((int)allStat) % 60;
                 secondText.setText( (String.format("%d'%d\"",mins,secs)) );
+
+                //Showcase percentage
+                if(myStat>allStat) {
+                    percentageLabel.setText(String.format("You ran %.0f%% more than average.",((myStat-allStat)*100.0f)/myStat));
+                } else if (myStat<allStat) {
+                    percentageLabel.setText(String.format("You ran %.0f%% less than average.",((allStat-myStat)*100.0f)/allStat));
+                }else {
+                    percentageLabel.setText("You are average.");
+                }
                 break;
             case 1:
                 myStat /= 1000;
@@ -65,13 +77,30 @@ public class StatsWidgetFragment extends Fragment {
 
                 allStat /= 1000;
                 secondText.setText( (String.format("%.1fkm",allStat)) );
+                //Showcase percentage
+                if(myStat>allStat) {
+                    percentageLabel.setText(String.format("You ran %.0f%% further than average.",((myStat-allStat)*100.0f)/myStat));
+                } else if (myStat<allStat) {
+                    percentageLabel.setText(String.format("You ran %.0f%% shorter than average.",((allStat-myStat)*100.0f)/allStat));
+                }else {
+                    percentageLabel.setText("You are average.");
+                }
                 break;
             case 2:
                 firstText.setText( (String.format("%.0fm",myStat)) );
 
                 secondText.setText( (String.format("%.0fm",allStat)) );
+                //Showcase percentage
+                if(myStat>allStat) {
+                    percentageLabel.setText(String.format("You climbed %.0f%% more than average.",((myStat-allStat)*100.0f)/myStat));
+                } else if (myStat<allStat) {
+                    percentageLabel.setText(String.format("You climbed %.0f%% less than average.",((allStat-myStat)*100.0f)/allStat));
+                }else {
+                    percentageLabel.setText("You are average.");
+                }
                 break;
         }
+
 
         // initializing variable for bar chart.
         barChart = view.findViewById(R.id.idBarChart);
@@ -93,32 +122,30 @@ public class StatsWidgetFragment extends Fragment {
         barChart.setData(barData);
 
         // adding color to our bar data set.
-        //barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         int[] graphColors = new int[]{Color.rgb(255, 194, 102), Color.rgb(166, 120, 51)};
         barDataSet.setColors(graphColors);
 
-        // setting text color.
+        // setting text color to transparent
         barDataSet.setValueTextColor(Color.argb(0.0f,0.0f,0.0f,0.0f));
 
-        // setting text size
+        // setting text size and disabling description
         barDataSet.setValueTextSize(16f);
         barChart.getDescription().setEnabled(false);
 
-        //customizing the chart
+        //make chart non interactive
         barChart.setTouchEnabled(false);
         barChart.setHighlightPerDragEnabled(false);
         barChart.setHighlightPerTapEnabled(false);
 
-
+        //Disable all axes and set y axis minimum to 0
         YAxis yaxis = barChart.getAxisLeft();
         yaxis.setEnabled(false);
+        yaxis.setDrawGridLines(false);
+        yaxis.setAxisMinimum(0);
         YAxis yaxis2 = barChart.getAxisRight();
         yaxis2.setEnabled(false);
         XAxis xaxis = barChart.getXAxis();
         xaxis.setEnabled(false);
-
-
-        yaxis.setDrawGridLines(false);
         xaxis.setDrawGridLines(false);
 
         // Inflate the layout for this fragment
