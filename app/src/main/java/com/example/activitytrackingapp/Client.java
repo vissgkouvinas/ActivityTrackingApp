@@ -1,5 +1,6 @@
 package com.example.activitytrackingapp;
 
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -7,13 +8,15 @@ import Codebase.Result;
 
 import java.io.*;
 import java.net.*;
+import java.util.Objects;
 
 public class Client extends Thread {
     String fileName;
+    Uri uri;
+    InputStream inputStream;
     File fileToUpload;
     Socket socket;
     Result result;
-    String username;
 
     float[] statistics = new float[4];
     float[] generalStatistics = new float[4];
@@ -25,11 +28,16 @@ public class Client extends Thread {
         this.fileName = path.substring(index + 1);
         this.fileToUpload =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),fileName);
     }
+    Client(Uri uri) {
+        this.uri = uri;
+    }
+    Client(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
 
     public Result getResult(){
         return result;
     }
-    public String getUsername(){return username;}
     public float[] getStatistics(){return statistics;}
     public float[] getGeneralStatistics(){return generalStatistics;}
 
@@ -45,17 +53,19 @@ public class Client extends Thread {
 
 
             /*---------------Reading and sending my gpx---------------*/
-            BufferedReader reader = new BufferedReader(new FileReader(fileToUpload));
-            String line = "";
-            Log.v(TAG,"Started reading the file!");
-            /*Read and Send each line*/
-            while ((line = reader.readLine())!= null) {
-                out.writeUTF(line);
-                out.flush();
-                // send next line
+
+            try (
+                 BufferedReader reader = new BufferedReader(
+                         new InputStreamReader(Objects.requireNonNull(inputStream)))) {
+                Log.v(TAG,"Started reading the file!");
+                String line ="";
+                while ((line = reader.readLine()) != null) {
+                    out.writeUTF(line);
+                    out.flush();
+                    // send next line
+                }
+                Log.v(TAG,"Finished reading the File!");
             }
-            Log.v(TAG,"Finished reading the File!");
-            reader.close();//Close the File Reader
 
 
             /*---------------Create the Input Stream where I will be receiving my results---------------*/
@@ -76,13 +86,12 @@ public class Client extends Thread {
                 ioException.printStackTrace();
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
-            } /*catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }*/
+            }
 
             /*Closing Output and Input Streams, also the Socket to the server*/
             in.close();
             out.close();
+            inputStream.close();
             socket.close();
 
         } catch (UnknownHostException unknownHost) {

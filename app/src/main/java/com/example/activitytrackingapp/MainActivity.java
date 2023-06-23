@@ -1,5 +1,8 @@
 package com.example.activitytrackingapp;
 
+
+import static android.app.PendingIntent.getActivity;
+
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -29,6 +32,8 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -184,7 +189,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             Toast.makeText(MainActivity.this, pathOfChosenFile, Toast.LENGTH_SHORT).show();
             (new Thread() {
                 public void run() {
-                    Client client = new Client(pathOfChosenFile);
+                    InputStream inputStream;
+                    try {
+                        inputStream = getContentResolver().openInputStream(currFileURI);
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Client client = new Client(inputStream);
                     client.start();
                     try {
                         client.join();
