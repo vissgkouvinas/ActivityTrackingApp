@@ -1,6 +1,6 @@
 package com.example.activitytrackingapp;
 
-import android.net.Uri;
+
 import android.os.Environment;
 import android.util.Log;
 
@@ -12,12 +12,10 @@ import java.util.Objects;
 
 public class Client extends Thread {
     String fileName;
-    Uri uri;
     InputStream inputStream;
     File fileToUpload;
     Socket socket;
     Result result;
-
     float[] statistics = new float[4];
     float[] generalStatistics = new float[4];
     private static final String TAG = "Client";
@@ -28,9 +26,7 @@ public class Client extends Thread {
         this.fileName = path.substring(index + 1);
         this.fileToUpload =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),fileName);
     }
-    Client(Uri uri) {
-        this.uri = uri;
-    }
+
     Client(InputStream inputStream) {
         this.inputStream = inputStream;
     }
@@ -79,6 +75,7 @@ public class Client extends Thread {
                 generalStatistics = (float[]) in.readObject();
 
                 //Thread.sleep(10000);
+
                 /*Print Result*/
                 Log.v(TAG,result.toString());
 

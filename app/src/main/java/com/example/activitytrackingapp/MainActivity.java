@@ -1,11 +1,5 @@
 package com.example.activitytrackingapp;
 
-
-import static android.app.PendingIntent.getActivity;
-
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -13,11 +7,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.GnssAntennaInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
@@ -26,11 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-//import Client;
-
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.button.MaterialButton;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -42,17 +30,12 @@ import Codebase.Result;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
-
     String username;
-
     float[] statistics = {0.0f,0.0f,0.0f,0.0f};
-
     float[] generalStatistics= {0.0f,0.0f,0.0f,0.0f};
-
     public ArrayList<Result> resultsList = new ArrayList<Result>();
     Bundle resultsData = new Bundle();
     Bundle statsData = new Bundle();
-    //ResultsFragment resultsFragment = new ResultsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,17 +188,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     Result result = client.getResult();
                     resultsList.add(result);
                     username = result.getName();
-
-
                     statistics = client.getStatistics();
                     generalStatistics = client.getGeneralStatistics();
-                    Log.v("ACTIVITY","THIS IS INSIDE THE ACTIVITY\n----------"+username+"----------\n");
-                    /*
-                    for (Codebase.Result result : resultsList) {
-                        if(result != null) {
-                            Log.v("ACTIVITY", result.toString());
-                        }
-                    }*/
+
                     if(statistics != null) {
                         Log.v("ACTIVITY", "My Statistics");
                         for (float stat : statistics) {
@@ -245,7 +220,4 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         } else
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 111);
     }
-
-
-
 }

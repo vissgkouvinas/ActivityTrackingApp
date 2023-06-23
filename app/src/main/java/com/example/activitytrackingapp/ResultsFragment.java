@@ -2,13 +2,9 @@ package com.example.activitytrackingapp;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +12,6 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-import Codebase.Result;
 
 
 public class ResultsFragment extends Fragment {
@@ -45,7 +40,6 @@ public class ResultsFragment extends Fragment {
         });
 
         resultsList = (ArrayList<Codebase.Result>) getArguments().getSerializable("results");
-
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         if (!resultsList.isEmpty()) {
@@ -58,7 +52,6 @@ public class ResultsFragment extends Fragment {
                 specificResult.putSerializable("result", result);
                 ResultsWidgetFragment newFragment = new ResultsWidgetFragment();
                 fragmentTransaction.add(R.id.resultsContainer, ResultsWidgetFragment.class, specificResult);
-
             }
             fragmentTransaction.commit();
 

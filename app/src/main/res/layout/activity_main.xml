@@ -77,6 +77,4 @@
         android:translationZ="10dp"
         />
 
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,16 +7,13 @@
     android:layout_margin="7dp"
     android:background="@drawable/layout_bg"
     android:gravity="center_horizontal"
-
     android:orientation="vertical"
     tools:context=".ResultsWidgetFragment">
-
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:paddingLeft="30dp"
-        >
+        android:paddingStart="30dp">
 
         <TextView
             android:id="@+id/phraseDateText"
@@ -25,10 +22,7 @@
             android:layout_centerVertical="true"
             android:text="Your Night Run"
             android:textColor="#A2A2B6"
-            android:layout_below="@+id/dateText"
-
-            />
-
+            android:layout_below="@+id/dateText" />
         <TextView
             android:id="@+id/dateText"
             android:layout_width="wrap_content"
@@ -118,7 +112,5 @@
             app:layout_constraintStart_toStartOf="@+id/elevationText"
             app:layout_constraintTop_toTopOf="@+id/elevationText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </LinearLayout>

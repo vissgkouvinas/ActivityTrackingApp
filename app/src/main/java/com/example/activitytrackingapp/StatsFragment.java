@@ -13,7 +13,6 @@ import android.widget.Button;
 
 public class StatsFragment extends Fragment {
 
-
     float[] myStatistics;
     float[] generalStatistics;
     @Override
@@ -48,13 +47,6 @@ public class StatsFragment extends Fragment {
             fragmentTransaction.add(R.id.statsContainer, StatsWidgetFragment.class, widgetData);
         }
         fragmentTransaction.commit();
-
-
-
-
-
-
-
 
         // Inflate the layout for this fragment
         return view;
